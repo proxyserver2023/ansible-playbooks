@@ -1,0 +1,5 @@
+- hosts: local_containers
+  gather_facts: no
+  tasks:
+    - name: Run uptime command
+      command: uptime

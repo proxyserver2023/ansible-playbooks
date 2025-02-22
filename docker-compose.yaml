@@ -1,0 +1,13 @@
+services:
+  ansible_test1:
+    image: geerlingguy/docker-ubuntu2404-ansible
+    container_name: ansible_test1
+    command: sleep infinity
+  ansible_test2:
+    image: geerlingguy/docker-ubuntu2404-ansible
+    container_name: ansible_test2
+    command: sleep infinity
+  ansible_test3:
+    image: geerlingguy/docker-ubuntu2404-ansible
+    container_name: ansible_test3
+    command: sleep infinity
