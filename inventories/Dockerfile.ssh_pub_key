@@ -1,0 +1,35 @@
+FROM ubuntu:24.04
+
+# Prevent interactive dialogue during build
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install OpenSSH server and sudo
+RUN apt-get update && apt-get install -y openssh-server sudo && \
+  mkdir /var/run/sshd
+
+
+# Create a user "ansible" without a password
+RUN useradd -m -s /bin/bash ansible
+
+
+# Create .ssh directory for the ansible user
+RUN mkdir -p /home/ansible/.ssh
+
+
+# Copy the public key for key-based authentication
+COPY authorized_keys /home/ansible/.ssh/authorized_keys
+
+# Set appropriate permissions for the .ssh directory and authorized_keys file
+RUN chown -R ansible:ansible /home/ansible/.ssh && \
+  chmod 700 /home/ansible/.ssh && \
+  chmod 600 /home/ansible/.ssh/authorized_keys
+
+# Disable password authentication for enhanced security
+RUN sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
+  sed -i 's/^PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+
+# Expose SSH port
+EXPOSE 22
+
+# Run the SSH daemon in the foreground
+CMD ["/usr/sbin/sshd", "-D"]

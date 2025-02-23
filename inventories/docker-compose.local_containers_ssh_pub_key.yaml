@@ -1,0 +1,24 @@
+services:
+  ansible_test1:
+    build:
+      context: .
+      dockerfile: Dockerfile.ssh_pub_key
+    container_name: ansible_test1
+    ports:
+      - "2221:22" # Maps container port 22 to host port 2221
+
+  ansible_test2:
+    build:
+      context: .
+      dockerfile: Dockerfile.ssh_pub_key
+    container_name: ansible_test2
+    ports:
+      - "2222:22" # Maps container port 22 to host port 2222
+
+  ansible_test3:
+    build:
+      context: .
+      dockerfile: Dockerfile.ssh_pub_key
+    container_name: ansible_test3
+    ports:
+      - "2223:22" # Maps container port 22 to host port 2223
